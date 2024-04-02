@@ -4,3 +4,4 @@
 *.pyc
 __pycache__/
 db.*
+django_venv/
