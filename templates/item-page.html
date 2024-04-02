@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Товар</title>
+</head>
+<body>
+    <h2>{{ item.name }}</h2>
+    {% if item.quantity %}
+    Количество: <i>{{ item.quantity }}
+    {% else %}
+    <i>товар отсутствует</i>
+    {% endif %}
+
+    <p><a href="/items">к списку товаров</a></p>
+</body>
+</html>
