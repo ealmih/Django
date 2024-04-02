@@ -11,12 +11,19 @@ items = [
 
 
 # Create your views here.
-def home(requst):
-    text = """<h1>"Изучаем django"</h1>
-<strong>Автор</strong>: <i>Иванов И.П.</i>
-<p><a href="/about">обо мне</a></p>
-<p><a href="/items">к списку товаров</a></p>"""
-    return HttpResponse(text)
+def home(request):
+    context = {
+        "name" : "Ivan Petrov",
+        "email" : "ma@mail.ru"
+    }
+    return render(request, "index.html", context)
+    #return render(request, "index.html")
+#     text = """<h1>"Изучаем django"</h1>
+# <strong>Автор</strong>: <i>Иванов И.П.</i>
+# <p><a href="/about">обо мне</a></p>
+# <p><a href="/items">к списку товаров</a></p>"""
+#     return HttpResponse(text)
+
 
 def about(requst):
     text = """Имя: Иван
@@ -45,6 +52,12 @@ def allitems(request):
 def allitems2(request):
     text = "<h2>Список товаров</h2><ol>"
     for item in items:
-        text += f"<li>{item['name']}</li>"
+        text += f"<li><a href='/item/{item['id']}'>{item['name']}</li>"
     text += '</ol>'
     return HttpResponse(text)
+
+def items_list(request):
+    context = {
+        "items": items
+    }
+    return render(request, "items-list.html", context)
