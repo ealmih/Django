@@ -14,8 +14,8 @@ items = [
 def home(requst):
     text = """<h1>"Изучаем django"</h1>
 <strong>Автор</strong>: <i>Иванов И.П.</i>
-<p><a href="http://127.0.0.1:8000/about/">обо мне</a></p>
-<p><a href="http://127.0.0.1:8000/items/">к списку товаров</a></p>"""
+<p><a href="/about">обо мне</a></p>
+<p><a href="/items">к списку товаров</a></p>"""
     return HttpResponse(text)
 
 def about(requst):
@@ -29,15 +29,22 @@ email: vasya@mail.ru"""
 def item(request, id):
     if 0<id<=len(items):
         text = f"""<p>{items[id-1]['name']}</p>
-        <p><a href="http://127.0.0.1:8000/items/">назад к списку товаров</a></p>"""
+        <p><a href="/items">назад к списку товаров</a></p>"""
     else:
         text = f"""<p>Товар с id={id} не найден</p>
-        <p><a href="http://127.0.0.1:8000/items/">назад к списку товаров</a></p>"""
+        <p><a href="/items">назад к списку товаров</a></p>"""
     return HttpResponse(text)
 
 def allitems(request):
     text = ""
     for i in range(len(items)):
-        text += f"""<p><a href="http://127.0.0.1:8000/item/{i+1}/"{i+1}. {items[i]['name']}</a></p>"""
+        text += f"""<p><a href="/item/{i+1}/"{i+1}. {items[i]['name']}</a></p>"""
         text += f"<h1>{i+1}. {items[i]['name']}</h1>"
+    return HttpResponse(text)
+
+def allitems2(request):
+    text = "<h2>Список товаров</h2><ol>"
+    for item in items:
+        text += f"<li>{item['name']}</li>"
+    text += '</ol>'
     return HttpResponse(text)
