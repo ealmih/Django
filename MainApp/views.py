@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
+from MainApp.models import Item
+from django.core.exceptions import ObjectDoesNotExist
 
 # items = [
 #    {"id": 1, "name": "Кроссовки abibas"},
@@ -10,13 +12,13 @@ from django.http import HttpResponseNotFound
 #    {"id": 5, "name": "Кепка"},
 # ]
 
-items = [
-   {"id": 1, "name": "Кроссовки abibas" ,"quantity":5},
-   {"id": 2, "name": "Куртка кожаная" ,"quantity":2},
-   {"id": 3, "name": "Coca-cola 1 литр" ,"quantity":12},
-   {"id": 4, "name": "Картофель фри" ,"quantity":0},
-   {"id": 5, "name": "Кепка" ,"quantity":124},
-]
+# items = [
+#    {"id": 1, "name": "Кроссовки abibas" ,"quantity":5},
+#    {"id": 2, "name": "Куртка кожаная" ,"quantity":2},
+#    {"id": 3, "name": "Coca-cola 1 литр" ,"quantity":12},
+#    {"id": 4, "name": "Картофель фри" ,"quantity":0},
+#    {"id": 5, "name": "Кепка" ,"quantity":124},
+# ]
 
 
 
@@ -52,32 +54,34 @@ email: vasya@mail.ru"""
 #         <p><a href="/items">назад к списку товаров</a></p>"""
 #     return HttpResponse(text)
 
-def get_item(request, id):
-    for item in items:
-        if item['id'] == id:
-            # if item["quantity"] == 0:
-            #     item["quantity"] = 'товар отсутствует'
+def get_item(request, item_id:int):
+        try:
+             item = Item.objects.get(id=item_id)
+        except ObjectDoesNotExist:
+             return HttpResponseNotFound(f'Item with id={item_id} not found')
+        else:
             context = {
-                'item': item
+            'item': item
             }
-            return render(request, "item-page.html", context)
-    return HttpResponseNotFound(f'Item with id={id} not found')
+        return render(request, "item-page.html", context)
 
-def allitems(request):
-    text = ""
-    for i in range(len(items)):
-        text += f"""<p><a href="/item/{i+1}/"{i+1}. {items[i]['name']}</a></p>"""
-        text += f"<h1>{i+1}. {items[i]['name']}</h1>"
-    return HttpResponse(text)
 
-def allitems2(request):
-    text = "<h2>Список товаров</h2><ol>"
-    for item in items:
-        text += f"<li><a href='/item/{item['id']}'>{item['name']}</li>"
-    text += '</ol>'
-    return HttpResponse(text)
+# def allitems(request):
+#     text = ""
+#     for i in range(len(items)):
+#         text += f"""<p><a href="/item/{i+1}/"{i+1}. {items[i]['name']}</a></p>"""
+#         text += f"<h1>{i+1}. {items[i]['name']}</h1>"
+#     return HttpResponse(text)
+
+# def allitems2(request):
+#     text = "<h2>Список товаров</h2><ol>"
+#     for item in items:
+#         text += f"<li><a href='/item/{item['id']}'>{item['name']}</li>"
+#     text += '</ol>'
+#     return HttpResponse(text)
 
 def items_list(request):
+    items = Item.objects.all()
     context = {
         "items": items
     }

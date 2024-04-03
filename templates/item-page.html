@@ -6,11 +6,12 @@
 </head>
 <body>
     <h2>{{ item.name }}</h2>
-    {% if item.quantity %}
+    <!-- {% if item.quantity %}
     Количество: <i>{{ item.quantity }}
     {% else %}
     <i>товар отсутствует</i>
-    {% endif %}
+    {% endif %} -->
+    <div>Количество: <i>{{ item.count | default:"товар отсутствует на складе" }}</div>
 
     <p><a href="/items">к списку товаров</a></p>
 </body>
