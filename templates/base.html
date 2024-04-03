@@ -4,15 +4,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     {% block style %}
-    {% include 'inc-menu.html' %}
+        {# Это общая css для всех страниц #}
+        <link rel="stylesheet" href="style.css">
+        {# Но каждая страница может содержать доп.уникальные css #}
     {% endblock %}
 </head>
-
 <body>
-
+<header>
+    
+    {% include 'inc-menu.html' %}
+    
+</header>
+<main>
+    {#  Содержимое этого блока уникально на каждой странице #}
     {% block content %}
-
     {% endblock %}
+</main>
+<footer>
 
+</footer>
 </body>
 </html>
+
+
+
