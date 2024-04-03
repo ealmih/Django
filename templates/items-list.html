@@ -1,17 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h2>Список товаров</h2>
+{% extends 'base.html' %}
 
-    <ol>
-        {% for item in items %}
-            <li><a href='/item/{{ item.id }}'>{{ item.name }}</li>
-            {% endfor %}
-    </ol> 
-    <p><a href="/">на главную</a></p>   
-</body>
-</html>
+{% block style %}
+{% include 'inc-menu.html' %}
+    <style>
+        li{
+            display: inline-block;
+            border: 5px solid purple;
+            padding: 10px 20px;
+        }
+        a{
+            text-decoration: none;
+            color: chocolate;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<h2>Список товаров</h2>
+<ol>
+    {% for item in items %}
+        <li>
+            <a href="{% url 'item-detail' item.id %}">{{ item.name }}</a>
+        </li>
+    {% endfor %}
+</ol> 
+<a href="{% url 'home' %}">на главную</a></p>   
+{% endblock %}

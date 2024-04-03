@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start page</title>
-</head>
-<body>
-    <header>
-        / <a href="/">домой</a> / <a href="/items">к списку товаров</a> / <a href="/about">контакты</a> /
-    </header>
-    <h1>Приветствую!</h1>
-    
-    Меня зовут: <i>{{name}}</i> <br>
-    My email: <i>{{email}}</i> <br>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<h1 class="demo">Приветствую!</h1>
+
+<span style='color: blue'>Меня зовут: <i>{{name}}.</span><br>
+My email: <i>{{email}}</i> <br>
+
+{% endblock %}
